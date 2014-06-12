@@ -1,0 +1,15 @@
+{
+    "appID": "autostop-server",
+    "port": "9084",
+    "routes": {
+        "/": "index"
+    },
+    "pages": {
+        "index": {
+            "html": "apps/autostop-server/public/test.html"
+        }
+    },
+    "modules": [
+        "route_handler"
+    ]
+}
