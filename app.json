@@ -10,6 +10,7 @@
         }
     },
     "modules": [
-        "route_handler"
+        "route_handler",
+        "user_handler"
     ]
 }
