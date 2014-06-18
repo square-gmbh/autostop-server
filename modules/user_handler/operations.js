@@ -6,25 +6,25 @@ it creates it */
 
 /* user object example */
 /*
-*	{
-*		"email": "dan.andrei@square.com",
-*		"firstName": "Dan",
-*		"lastName": "Andrei",
-*		"profileId": "some id"
-*	}
+*   {
+*       "email": "dan.andrei@square.com",
+*       "firstName": "Dan",
+*       "lastName": "Andrei",
+*       "profileId": "some id"
+*   }
 */
 exports.setUser = function (link) {
-	// set the response header
+    // set the response header
     link.res.setHeader('Access-Control-Allow-Origin', link.headers.origin);
 
     if (!link.data.params) {
-    	link.res.writeHead(400);
-    	link.res.end('Bad request');
+        link.res.writeHead(400);
+        link.res.end('Bad request');
         return;
     }
 
-	// get the user
-	var user = link.data.params;
+    // get the user
+    var user = link.data.params;
 
     getCollection('users', function (err, col) {
 
@@ -84,8 +84,8 @@ exports.setUser = function (link) {
 
 function getCollection (collection_name, callback) {
 
-	// connect to mongo
-	MongoClient.connect('mongodb://127.0.0.1:27017/autostop', function (err, db) {
+    // connect to mongo
+    MongoClient.connect('mongodb://127.0.0.1:27017/autostop', function (err, db) {
         
         if (err) {
             callback(err);

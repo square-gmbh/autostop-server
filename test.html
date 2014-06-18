@@ -1,0 +1,31 @@
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <form id="search" action="http://localhost:9084/@/route_handler/search" method="POST">
+        <h2>Seach test form</h2><br>
+        <input type="text" name="start" placeholder="Pornire"><br>
+        <input type="text" name="destination" placeholder="Destinatie"><br>
+        <input type="date" name="date" placeholder="Data"><br>
+        <button type="submit">Cauta</button>
+    </form>
+    <hr>
+    <form id="Create" action="http://localhost:9084/@/route_handler/create" method="POST">
+        <h2>Create test form</h2><br>
+        <input type="text" name="start" placeholder="Pornire"><br>
+        <input type="text" name="destination" placeholder="Destinatie"><br>
+        <input type="text" name="via" placeholder="Via"><br>
+        <textarea name="notes" placeholder="Note"></textarea><br>
+        <select name="seats"><br>
+            <option selected value="0">Selectati numarul de locuri</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+        </select><br>
+        <input type="date" name="date" placeholder="Data"><input type="number" name="hour"><input type="number" name="minutes"><br>
+        <button type="submit">Creaza</button>
+    </form>
+</body>
+</html>
