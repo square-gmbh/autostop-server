@@ -27,5 +27,20 @@
         <input type="date" name="date" placeholder="Data"><input type="number" name="hour"><input type="number" name="minutes"><br>
         <button type="submit">Creaza</button>
     </form>
+    <hr>
+    <form id="search" action="http://localhost:9084/@/user_handler/setUser" method="POST">
+        <h2>Set user test form</h2><br>
+        <input type="text" name="email" placeholder="eMail"><br>
+        <input type="text" name="firstName" placeholder="Prenume"><br>
+        <input type="text" name="lastName" placeholder="Nume"><br>
+        <input type="text" name="id" placeholder="id"><br>
+        <button type="submit">Set</button>
+    </form>
+    <hr>
+    <form id="search" action="http://localhost:9084/@/user_handler/getUser" method="POST">
+        <h2>get user test form</h2><br>
+        <input type="text" name="id" placeholder="id"><br>
+        <button type="submit">get</button>
+    </form>
 </body>
 </html>

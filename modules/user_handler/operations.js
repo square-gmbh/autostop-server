@@ -10,21 +10,21 @@ it creates it */
 *       "email": "dan.andrei@square.com",
 *       "firstName": "Dan",
 *       "lastName": "Andrei",
-*       "profileId": "some id"
+*       "id": "some id"
 *   }
 */
 exports.setUser = function (link) {
     // set the response header
     link.res.setHeader('Access-Control-Allow-Origin', link.headers.origin);
 
-    if (!link.data.params) {
+    if (!link.data) {
         link.res.writeHead(400);
-        link.res.end('Bad request');
+        link.res.end('ERR_MISSING_PARAMS');
         return;
     }
 
     // get the user
-    var user = link.data.params;
+    var user = link.data;
 
     getCollection('users', function (err, col) {
 
@@ -50,7 +50,7 @@ exports.setUser = function (link) {
                     email: user.email,
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    profileId: user.profileId,
+                    id: user.id,
                     points: {
                         bad: 0,
                         good: 0
@@ -68,20 +68,70 @@ exports.setUser = function (link) {
 
                     // all good!
                     link.res.writeHead(200);
-                    link.res.end('ok');
+                    link.res.end('OK');
                 });
             } else {
                 // user exists so return
                 link.res.writeHead(200);
-                link.res.end('ok');
+                link.res.end('OK');
 
                 console.log(doc);
             }
         });
     });
-
 }
 
+/* this function handles the request for user information */
+
+/* user object example */
+/*
+*   {
+*       "id": "some id"
+*   }
+*/
+exports.getUser = function (link) {
+    link.res.setHeader('Access-Control-Allow-Origin', link.headers.origin);
+
+    if (!link.data.id) {
+        link.res.writeHead(400);
+        link.res.end('ERR_NO_USER_ID');
+        return;
+    }
+
+    // get the user id
+    var id = link.data.id;
+
+    // connect to mongo
+    getCollection('users', function (err, col) {
+
+        if (err) {
+            link.res.writeHead(500);
+            link.res.end(JSON.stringify(err));
+            return;
+        }
+
+        col.findOne({ 'id': id }, function (err, doc) {
+
+            if (err) {
+                link.res.writeHead(500);
+                link.res.end(JSON.stringify(err));
+                return;
+            }
+            // handle user not found
+            if (!doc) {
+                link.res.writeHead(500);
+                link.res.end('ERR_USER_NOT_FOUND');
+                return;
+            }
+
+            // user found, send the info back as JSON string
+            link.res.writeHead(200);
+            link.res.end(JSON.stringify(doc));
+        });
+    });
+}
+
+// private function
 function getCollection (collection_name, callback) {
 
     // connect to mongo
