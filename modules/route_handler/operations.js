@@ -15,7 +15,8 @@ var ObjectId = require('mongodb').ObjectID;
 exports.search = function (link) {
     link.res.setHeader('Access-Control-Allow-Origin', link.headers.origin);
 
-    var route = link.data;
+    var route = JSON.parse(link.data.params);
+    
     if (!route.start || !route.destination || !route.date) {
         link.res.writeHead(400);
         link.res.end('ERR_BAD_ROUTE');
@@ -79,7 +80,7 @@ exports.create = function (link) {
     link.res.setHeader('Access-Control-Allow-Origin', link.headers.origin);
 
     // get the route
-    var route = link.data;
+    var route = JSON.parse(link.data.params);
 
     // validate the route
     if (!route.start || !route.destination || !route.date || !route.seats) {

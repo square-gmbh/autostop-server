@@ -17,14 +17,15 @@ exports.setUser = function (link) {
     // set the response header
     link.res.setHeader('Access-Control-Allow-Origin', link.headers.origin);
 
-    if (!link.data) {
+    if (!link.data.params) {
         link.res.writeHead(400);
         link.res.end('ERR_MISSING_PARAMS');
         return;
     }
 
     // get the user
-    var user = link.data;
+    var user = link.data.params;
+    var user = JSON.parse(user);
 
     getCollection('users', function (err, col) {
 
@@ -35,7 +36,7 @@ exports.setUser = function (link) {
         }
 
         // find the user
-        col.findOne({ 'email': user.email }, function (err, doc) {
+        col.findOne({ 'id': user.id }, function (err, doc) {
 
             if (err) {
                 link.res.writeHead(500);
@@ -92,14 +93,15 @@ exports.setUser = function (link) {
 exports.getUser = function (link) {
     link.res.setHeader('Access-Control-Allow-Origin', link.headers.origin);
 
-    if (!link.data.id) {
+    // get the user id
+    var data = JSON.parse(link.data.params);
+    var id = data.id;
+
+    if (!id) {
         link.res.writeHead(400);
         link.res.end('ERR_NO_USER_ID');
         return;
     }
-
-    // get the user id
-    var id = link.data.id;
 
     // connect to mongo
     getCollection('users', function (err, col) {
